@@ -1,0 +1,236 @@
+@font-face {
+  font-family: 'FontAwesome';
+  font-weight: normal;
+  font-style: normal;
+  src: url('fonts/fa-solid-900.ttf') format('truetype');
+}
+
+.fa {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background-color: white;
+  color: black;
+  font: 14px sans-serif;
+}
+
+html,body {
+  width: 250px;
+  background-image: url("img/id_card_top.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+body {
+  background-color: white;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+  width: fit-content;
+  width: -moz-fit-content;
+  width: 250px;
+}
+
+h2 {
+  background-color: #eee;
+  border: 0;
+  color: #666;
+  cursor: pointer;
+  font-size: 100%;
+  font-weight: normal;
+  padding: 0.2em;
+  text-align: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+}
+
+:focus {
+  outline: 0;
+}
+
+#user_choice {
+  width: 90%;
+  -webkit-appearance: button;
+  -webkit-border-radius: 2px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -webkit-user-select: none;
+  background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+  background-position: 97% center;
+  background-repeat: no-repeat;
+  border: 1px solid #AAA;
+  color: #555;
+  font-size: inherit;
+  overflow: hidden;
+  margin: auto 5%;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#user_choice:hover {
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+#appinfo {
+  color: #bbb;
+  display: block;
+  font-size: 75%;
+  line-height: 1.2;
+  margin: 30px 0 0 0;
+  //padding: calc(0.1em + 1px) 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  width: calc(100% - 10px);
+  border-left: 5px solid black;
+  border-right: 5px solid black;
+}
+
+#version {
+  font-size: 90%;
+  font-weight: normal;
+}
+
+#panes {
+  display: flex;
+  flex-direction: row-reverse;
+  border-left: 5px solid black;
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+#panes > div {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+
+body[dir="ltr"] #panes > div {
+  direction: ltr;
+}
+
+body[dir="rtl"] #panes > div {
+  direction: rtl;
+}
+
+#panes > div:nth-of-type(2) {
+  flex-shrink: 0;
+  font-family: "Noto Sans", sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 24em;
+}
+
+/**
+ Scroll bar to the left.
+ */
+
+body[dir="ltr"] #panes > div:nth-of-type(2) {
+  direction: rtl;
+  margin-right: 1px;
+}
+
+body[dir="rtl"] #panes > div:nth-of-type(2) {
+  direction: ltr;
+  margin-left: 1px;
+}
+
+#panes > div:first-of-type {
+  min-width: 11em;
+  padding: 0;
+}
+
+p {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fa {
+  font-size: 120%;
+}
+
+#identity {
+  margin: 0.5em;
+}
+
+#identity .fa {
+  color: rgb(34, 199, 130);
+  cursor: pointer;
+  font-size: 400%;
+  margin: 0;
+}
+
+#identity .fa:hover {
+  opacity: 0.9;
+}
+
+#basicTools {
+  margin: 0.8em 0 0.4em 0;
+}
+
+.tool:first-child {
+  margin-left: 0;
+}
+
+.tool {
+  color: #aaa;
+  cursor: pointer;
+  visibility: hidden;
+  margin-left: 0.4em;
+  min-width: 1em;
+  padding: 0 0.2em;
+  unicode-bidi: embed;
+}
+
+.tool.enabled {
+  visibility: visible;
+}
+
+.tool.enabled:hover {
+  color: #444;
+}
+
+.tooltipContainer {
+  width: 100%;
+}
+
+/**
+ Small coloured label at the left of a row
+ */
+
+/**
+ Source for color-blind color scheme from https://github.com/WyohKnott:
+ https://github.com/chrisaljoudi/uBlock/issues/467#issuecomment-95177219
+ */
+
+/* Rule cells */

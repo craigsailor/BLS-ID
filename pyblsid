@@ -1,0 +1,107 @@
+#!/usr/bin/python -u
+
+# Note that running python with the `-u` flag is required on Windows,
+# in order to ensure that stdin and stdout are opened in binary, rather
+# than text, mode.
+
+import json
+import sys
+import struct
+import subprocess
+import pickle
+
+ID_COMMAND = "/home/neiman/work/programming/cryptography/bls/bls/bin/webID"
+#ID_COMMAND = "/tmp/bls_smpl.exe"
+
+ids = {}
+
+# Read a message from stdin and decode it.
+def get_message():
+    raw_length = sys.stdin.read(4)
+    if not raw_length:
+        sys.exit(0)
+    message_length = struct.unpack('=I', raw_length)[0]
+    message = sys.stdin.read(message_length)
+    return json.loads(message)
+
+
+# Encode a message for transmission, given its content.
+def encode_message(message_content):
+    encoded_content = json.dumps(message_content)
+    encoded_length = struct.pack('=I', len(encoded_content))
+    return {'length': encoded_length, 'content': encoded_content}
+
+
+# Send an encoded message to stdout.
+def send_message(encoded_message):
+    sys.stdout.write(encoded_message['length'])
+    sys.stdout.write(encoded_message['content'])
+    sys.stdout.flush()
+
+# Reverse a string
+def reverse_string(a_string):
+    return a_string[::-1]
+
+# Get list of userids (key pairs plus alias)
+def get_user_list(a_string):
+    return '{alias: "User 1", pubkey: "lkjsdf238urfnsefiwer"}'
+
+#init an ID by creating a public key 
+def init(id=0):
+    command = ID_COMMAND + " init -id " + str(id)
+    return execute(command)
+
+# Get list of userids (key pairs plus alias)
+def sign_message(a_string):
+	command = ID_COMMAND + " sign -m " + a_string
+	return execute(command)
+    #return reverse_string(a_string)
+
+# Function to run a command line program
+def execute(cmd):
+    """
+        Purpose  : To execute a command and return exit status
+        Argument : cmd - command to execute
+        Return   : exit_code
+    """
+
+    process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (result, error) = process.communicate()
+
+    rc = process.wait()
+
+    if rc != 0:
+        return "Error: failed to execute command:", cmd
+
+    return result
+# end def execute
+
+def save_obj(obj, name):
+    output = open('obj/'+ name + '.pkl', 'wb')
+    pickle.dump(obj, output, -1)
+
+def load_obj(name):
+    try:
+        data = pickle.load(open('obj/'+ name + '.pkl', 'rb'))
+    except (OSError, IOError) as e:
+        data = ""
+
+    return data
+
+while True:
+    message = get_message()
+    parsed_json = json.loads(message)
+    message_command = parsed_json['command']
+
+    if message_command == "getID":
+        pubkey = load_obj("id")
+        send_message(encode_message('{"type": "id", "val": "' + pubkey + '"}'))
+    elif message_command == "init":
+        pubkey = init(0) 
+        save_obj(pubkey, "id")
+        send_message(encode_message('{"type": "id", "val": "' + pubkey + '"}'))
+    elif message_command == "sign":
+        signature = sign_message(parsed_json['message'])
+        send_message(encode_message('{"type": "signature", "val": "' + signature + '"}'))
+    else:
+        send_message(encode_message("Bad command requested"))

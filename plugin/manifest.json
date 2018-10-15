@@ -1,0 +1,35 @@
+{
+
+  "manifest_version": 2,
+  "name": "BLS Identity",
+  "version": "1.0",
+  "description": "Use BLS ID for website identity.",
+
+  "icons": {
+    "48": "icons/blsid-icon-green.svg"
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "blsid@cryptom.eu",
+      "strict_min_version": "50.0"
+    }
+  },
+  "background": {
+    "scripts": ["blsid-background.js"]
+  },
+  "page_action": {
+    "default_icon": "icons/blsid-icon-red.svg",
+	"default_title": "BLS ID",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["nativeMessaging","activeTab"],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.cryptom.eu/*", "http://localhost:4242/*"],
+      "js": ["blsid-plugin.js"]
+    }
+  ]
+
+}
