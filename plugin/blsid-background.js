@@ -73,5 +73,5 @@ function connect_to_server() {
   // send pubkey to server
   // get back random number from server
   randstr = Math.random(); 
-  port.postMessage('{"command": "sign", "message": ' + randstr + '"}');
+  port.postMessage('{"command": "sign", "message": "' + randstr + '"}');
 }
